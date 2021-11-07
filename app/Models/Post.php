@@ -15,4 +15,10 @@ class Post extends Model
         return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 
+
+    public function page(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Page::class, 'page_id', 'id');
+    }
+
 }

@@ -1,7 +1,12 @@
 <?php
 
+use App\Models\UserRelation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\Post;
+use App\Models\Page;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +27,5 @@ use Illuminate\Support\Facades\Route;
 //    Auth::logout();
 //    die('logged out');
 //})->middleware('auth');
+
+

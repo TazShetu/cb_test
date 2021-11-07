@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\{Page,Post,User,UserRelation};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -105,6 +106,39 @@ class ApiController extends Controller
         $post->content = $request->post_content;
         $post->save();
         return response()->json(['success' => "Your post has been published on your page"], 200);
+    }
+
+
+    public function feed(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'page' => 'required|integer',
+            'page_size' => 'required|integer',
+        ]);
+        $userId = $request->user()->id;
+        $pageNumber = $request->page;
+        $pageSize = $request->page_size;
+        $offset = ($pageNumber - 1) * $pageSize;
+
+        $posts = DB::select(DB::raw(
+            "SELECT * FROM (
+                        SELECT posts.content, posts.created_at FROM `posts` JOIN user_relations ON posts.creator_id = user_relations.user_id WHERE user_relations.follower_id = $userId
+                        UNION DISTINCT
+                        SELECT posts.content, posts.created_at FROM `posts` WHERE page_id IN (SELECT `page_id` FROM `page_user` WHERE user_id = $userId)
+                        ) AS post_data
+                        ORDER BY post_data.created_at DESC
+                        LIMIT $offset, $pageSize"
+        ));
+        $total =  DB::select(DB::raw(
+            "SELECT COUNT(*) AS total_post FROM (
+                        SELECT posts.content, posts.created_at FROM `posts` JOIN user_relations ON posts.creator_id = user_relations.user_id WHERE user_relations.follower_id = $userId
+                        UNION DISTINCT
+                        SELECT posts.content, posts.created_at FROM `posts` WHERE page_id IN (SELECT `page_id` FROM `page_user` WHERE user_id = $userId)
+                        ) AS post_data"
+        ));
+        $responseArray['total_count'] = $total[0]->total_post;
+        $responseArray['data'] = $posts;
+        return response()->json($responseArray, 200);
     }
 
 

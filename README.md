@@ -13,10 +13,9 @@
 
 
 - Newsfeed post orderby date desc with pagination
-- own post
-- created page post
+- own post (created page post)
 - followed page post
-- followed post
+- followed person post
 - 
 
 

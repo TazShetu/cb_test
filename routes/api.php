@@ -30,5 +30,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/follow/page/{pageId}', [ApiController::class, 'follow_page']);
     Route::post('/person/attach-post', [ApiController::class, 'attach_post']);
     Route::post('/page/{pageId}/attach-post', [ApiController::class, 'attach_post_in_page']);
+    Route::get('/person/feed', [ApiController::class, 'feed']);
 
 });
