@@ -34,12 +34,22 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+
+    public function own_pages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Page::class, 'creator_id', 'id');
+    }
+
+
+    public function own_posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Post::class, 'creator_id', 'id');
+    }
+
+
+    public function pages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Page::class, 'page_user', 'user_id', 'page_id');
+    }
+
 }
