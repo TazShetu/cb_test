@@ -23,12 +23,13 @@ class PageSeeder extends Seeder
         $p2->creator_id = 3;
         $p2->name = 'page by user 3';
         $p2->save();
-        $p2->followers()->attach([2]);
 
         $p4 = new Page;
         $p4->creator_id = 4;
         $p4->name = 'page by user 4';
         $p4->save();
+        $p4->followers()->attach([2]);
+
 
     }
 }

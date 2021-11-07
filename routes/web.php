@@ -28,4 +28,13 @@ use App\Models\Page;
 //    die('logged out');
 //})->middleware('auth');
 
+Route::get('/test', function () {
+    $user2 = User::findOrFail(2);
+
+    $followUsers = $user2->followUsers()->get();
+
+    dd($followUsers);
+
+});
+
 

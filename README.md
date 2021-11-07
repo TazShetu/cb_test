@@ -9,12 +9,5 @@
 - postman JSON file is also included [change token before test]
 - Test with that if you are running local server at port 8000
 - if shows keys not found error use command "php artisan passport:install"
-- 
+- use command "php artisan test" to unit test feed after seeding
 
-
-- 
-- 
-
-
-- unit test [description include in readme]
-- 
