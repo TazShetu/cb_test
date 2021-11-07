@@ -47,7 +47,7 @@ class User extends Authenticatable
     }
 
 
-    public function pages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function follows(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Page::class, 'page_user', 'user_id', 'page_id');
     }
