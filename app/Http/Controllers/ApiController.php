@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 class ApiController extends Controller
 {
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
@@ -28,6 +32,10 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
@@ -46,6 +54,10 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function page_create(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
@@ -59,6 +71,11 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @param $personId
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function follow_person($personId, Request $request): \Illuminate\Http\JsonResponse
     {
         $follow_user = User::findOrFail($personId);
@@ -71,6 +88,11 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @param $pageId
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function follow_page($pageId, Request $request): \Illuminate\Http\JsonResponse
     {
         $follow_page = Page::findOrFail($pageId);
@@ -80,6 +102,10 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function attach_post(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
@@ -93,6 +119,11 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @param $pageId
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function attach_post_in_page($pageId, Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
@@ -109,6 +140,10 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function feed(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
@@ -119,7 +154,7 @@ class ApiController extends Controller
         $pageNumber = $request->page;
         $pageSize = $request->page_size;
         $offset = ($pageNumber - 1) * $pageSize;
-
+        // raw query is faster, and I can not use eloquent with this kind of complex query
         $posts = DB::select(DB::raw(
             "SELECT * FROM (
                         SELECT posts.content, posts.created_at FROM `posts` JOIN user_relations ON posts.creator_id = user_relations.user_id WHERE user_relations.follower_id = $userId
