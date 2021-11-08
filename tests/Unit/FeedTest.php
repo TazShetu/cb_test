@@ -70,7 +70,8 @@ class FeedTest extends TestCase
         $user = User::findOrFail(2);
         $response = $this->actingAs($user, 'api')->get('/api/person/feed?page=1&page_size=1');
         $response->assertStatus(200)
-            ->assertJsonPath('total_count', 2);
+            ->assertJsonPath('total_count', 2)
+            ->assertJsonCount(2, $key = null);
     }
 
 

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "df1b4259-4a46-491f-905c-757fa5c64364",
+		"_postman_id": "ab2ff724-7f56-421c-8a46-951489b74066",
 		"name": "Code Bright Taz",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -377,7 +377,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"page\":1,\r\n    \"page_size\":2\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -385,7 +385,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/person/feed",
+					"raw": "http://127.0.0.1:8000/api/person/feed?page=1&page_size=2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -398,6 +398,16 @@
 						"api",
 						"person",
 						"feed"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "page_size",
+							"value": "2"
+						}
 					]
 				}
 			},
